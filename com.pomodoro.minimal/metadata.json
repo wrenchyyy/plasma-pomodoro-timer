@@ -15,7 +15,7 @@
         "Id": "com.pomodoro.minimal",
         "License": "MIT",
         "Name": "Pomodoro Timer",
-        "Version": "1.0",
+        "Version": "1.2",
         "Website": "https://github.com/wrenchyyy/plasma-pomodoro-timer"
     }
 }
