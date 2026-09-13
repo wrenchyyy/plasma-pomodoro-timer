@@ -1,5 +1,7 @@
 # Pomodoro Timer — Plasma 6 Widget
 
+[![KDE Store](https://img.shields.io/badge/KDE_Store-download-blue)](https://store.kde.org/p/2371261/)
+
 > Ported from https://github.com/Atornous12/waybar-pomodoro-module-c —
 > a minimalist Pomodoro module for Waybar, re-implemented here as a native
 > Plasma 6 panel widget.
@@ -38,6 +40,12 @@ a sound when it's time to work or take a break.
 | A Nerd Font (optional) | Renders the work-phase glyph (`󰔟`) correctly | No — without one you'll see a placeholder box for that icon only |
 
 ## Install
+
+- **KDE Store:** grab the `.plasmoid` from
+  [store.kde.org/p/2371261](https://store.kde.org/p/2371261/), then
+  right-click the panel → **Edit Panel** → **Add Widgets** → **Get New
+  Widgets** → **Install from file…**
+- **From source:**
 
 ```bash
 git clone <your-repo-url>
