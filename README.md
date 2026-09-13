@@ -34,7 +34,7 @@ a sound when it's time to work or take a break.
 | `org.kde.plasma.plasma5support` | Runs `notify-send` / `mpv` commands | Yes |
 | `org.kde.kirigami`, `org.kde.kcmutils` | Settings page | Yes |
 | `libnotify` (`notify-send`) | Phase-change notifications | Yes, on most distros |
-| `mpv` | Optional fallback sound player | No — install if you want the fallback (`sudo pacman -S mpv` / `sudo apt install mpv`) |
+| `mpv` | Optional fallback sound player | No — install if you want the fallback (`sudo pacman -S mpv` / `sudo apt install mpv` / / `sudo dnf install mpv`) |
 | A Nerd Font (optional) | Renders the work-phase glyph (`󰔟`) correctly | No — without one you'll see a placeholder box for that icon only |
 
 ## Install
@@ -80,8 +80,8 @@ Right-click the widget → **Configure…**:
 
 ```
 .
-├── com.pomodoro.minimal/          # The Plasma 6 widget (this is your code)
-│   ├── metadata.json              # Plasmoid metadata (id, author, license)
+├── com.pomodoro.minimal/          # The Plasma 6 widget 
+│   ├── metadata.json              # Plasmoid metadata
 │   └── contents/
 │       ├── ui/
 │       │   ├── main.qml           # Timer state machine + panel/popup UI
