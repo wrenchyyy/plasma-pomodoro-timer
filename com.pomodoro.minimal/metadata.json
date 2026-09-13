@@ -1,0 +1,19 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "",
+                "Name": "Wrenchy"
+            }
+        ],
+        "Category": "Utilities",
+        "Description": "Minimalist pomodoro timer for the Plasma panel. 50m work / 10m short / 20m long, 4 intervals. Left-click toggles, middle-click resets.",
+        "EnabledByDefault": true,
+        "Id": "com.pomodoro.minimal",
+        "License": "MIT",
+        "Name": "Pomodoro Timer",
+        "Version": "1.0"
+    }
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+  <kcfgfile name=""/>
+  <!-- Defaults mirror pomodoro.c: WORK 50m, SHORT 10m, LONG 20m, INTERVALS 4 -->
+  <group name="General">
+    <entry name="workMinutes" type="Int">
+      <default>50</default>
+    </entry>
+    <entry name="shortMinutes" type="Int">
+      <default>10</default>
+    </entry>
+    <entry name="longMinutes" type="Int">
+      <default>20</default>
+    </entry>
+    <entry name="intervals" type="Int">
+      <default>4</default>
+    </entry>
+    <entry name="panelFontFamily" type="String">
+      <default>monospace</default>
+    </entry>
+    <entry name="panelFontSize" type="Int">
+      <default>-1</default>
+    </entry>
+    <entry name="customSoundPath" type="String">
+      <default></default>
+    </entry>
+  </group>
+</kcfg>

@@ -1,0 +1,34 @@
+name: Build plasmoid release
+
+# Builds com.pomodoro.minimal.plasmoid from source and attaches it to a
+# GitHub Release. Trigger: push a tag like v1.0 / v1.1
+#   git tag v1.0 && git push origin v1.0
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate package metadata
+        run: |
+          python3 -m json.tool com.pomodoro.minimal/metadata.json > /dev/null && echo "metadata.json OK"
+          python3 -c "import xml.dom.minidom; xml.dom.minidom.parse('com.pomodoro.minimal/contents/config/main.xml'); print('main.xml OK')"
+
+      - name: Build .plasmoid
+        run: |
+          cd com.pomodoro.minimal
+          zip -qr ../com.pomodoro.minimal.plasmoid metadata.json contents
+          unzip -l ../com.pomodoro.minimal.plasmoid
+
+      - name: Publish to release
+        run: gh release create "$GITHUB_REF_NAME" com.pomodoro.minimal.plasmoid --generate-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
