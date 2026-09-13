@@ -11,9 +11,11 @@
         "Category": "Utilities",
         "Description": "Minimalist pomodoro timer for the Plasma panel. 50m work / 10m short / 20m long, 4 intervals. Left-click toggles, middle-click resets.",
         "EnabledByDefault": true,
+        "Icon": "/icons/pomodoro.svg",
         "Id": "com.pomodoro.minimal",
         "License": "MIT",
         "Name": "Pomodoro Timer",
-        "Version": "1.0"
+        "Version": "1.0",
+        "Website": "https://github.com/wrenchyyy/plasma-pomodoro-timer"
     }
 }

@@ -89,6 +89,8 @@ Right-click the widget → **Configure…**:
 │       ├── config/
 │       │   ├── main.xml           # Config key definitions + defaults
 │       │   └── config.qml         # Registers the settings page
+│       ├── icons/
+│       │   └── pomodoro.svg       # Widget icon (browser + About page)
 │       └── sounds/
 │           └── tililili.mp3       # Bundled alarm sound
 ├── install.sh                     # Installs/updates the widget via kpackagetool6

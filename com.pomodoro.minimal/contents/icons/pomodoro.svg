@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <clipPath id="body">
+      <circle cx="32" cy="36" r="24"/>
+    </clipPath>
+  </defs>
+  <!-- tomato body -->
+  <circle cx="32" cy="36" r="24" fill="#e53935"/>
+  <g clip-path="url(#body)">
+    <!-- smooth bottom shade, no seam -->
+    <ellipse cx="32" cy="53" rx="27" ry="15" fill="#c62828" opacity=".55"/>
+    <!-- glossy highlight -->
+    <ellipse cx="22" cy="29" rx="5" ry="8" fill="#ffffff" opacity=".28" transform="rotate(-20 22 29)"/>
+  </g>
+  <!-- stem -->
+  <rect x="29.5" y="4" width="5" height="11" rx="2.5" fill="#795548"/>
+  <!-- calyx leaves -->
+  <path d="M32 8 L36 14 L44 11 L40 17 L48 19 L39 21 L41 29 L34 24 L32 31 L30 24 L23 29 L25 21 L16 19 L24 17 L20 11 L28 14 Z" fill="#43a047"/>
+</svg>
