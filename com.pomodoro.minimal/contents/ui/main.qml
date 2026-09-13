@@ -114,19 +114,38 @@ PlasmoidItem {
     // Bundled alarm sound (contents/sounds/tililili.mp3), or the user's
     // own file when one is picked in the settings.
     // Primary: QtMultimedia. Fallback: mpv (original behavior).
+    // MediaDevices binding keeps playback on the system default sink
+    // (e.g. Bluetooth earphones) even when it changes after load.
+    MediaDevices {
+        id: mediaDevices
+    }
     MediaPlayer {
         id: player
         source: root.customSoundPath !== "" ? "file://" + root.customSoundPath : "../sounds/tililili.mp3"
-        audioOutput: AudioOutput {}
+        audioOutput: AudioOutput {
+            device: mediaDevices.defaultAudioOutput
+        }
+        onErrorOccurred: function(error, errorString) {
+            mpvFallback();
+        }
+    }
+
+    function bundledSoundFile() {
+        return String(Qt.resolvedUrl("../sounds/tililili.mp3")).replace(/^file:\/\//, "");
+    }
+
+    function mpvFallback() {
+        var f = root.customSoundPath !== "" ? root.customSoundPath : bundledSoundFile();
+        var quoted = "'" + String(f).replace(/'/g, "'\\''") + "'";
+        executable.exec("sh -c 'mpv --no-terminal " + quoted + " >/dev/null 2>&1 &'");
     }
 
     function playSound() {
-        var f = root.customSoundPath !== "" ? root.customSoundPath : "~/.config/waybar/sounds/tililili.mp3";
-        executable.exec("sh -c 'mpv --no-terminal \"" + f + "\" >/dev/null 2>&1 &'");
+        // Primary path; mpv only fires if MediaPlayer reports an error.
         try {
             player.play();
         } catch (e) {
-            // MediaPlayer unavailable; mpv fallback above already fired.
+            mpvFallback();
         }
     }
 
