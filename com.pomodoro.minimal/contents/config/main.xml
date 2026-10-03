@@ -24,5 +24,8 @@
     <entry name="customSoundPath" type="String">
       <default></default>
     </entry>
+    <entry name="persistentNotifications" type="Bool">
+      <default>true</default>
+    </entry>
   </group>
 </kcfg>

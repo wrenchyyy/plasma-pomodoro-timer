@@ -1,26 +1,55 @@
-name: Build plasmoid release
+name: Check and release
 
-# Builds com.pomodoro.minimal.plasmoid from source and attaches it to a
-# GitHub Release. Trigger: push a tag like v1.0 / v1.1
+# Every push to main and every pull request runs lint.sh (metadata.json,
+# main.xml, qmllint). Pushing a tag like v1.0 / v1.1 also builds
+# com.pomodoro.minimal.plasmoid from source and attaches it to a GitHub
+# Release:
 #   git tag v1.0 && git push origin v1.0
 on:
   push:
+    branches:
+      - main
     tags:
       - "v*"
+  pull_request:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
+    # Fedora has Plasma 6 and its QML modules, which qmllint needs to
+    # resolve the widget's imports.
+    container: fedora:44
     steps:
-      - uses: actions/checkout@v4
+      - name: Install Qt and Plasma QML modules
+        run: >
+          dnf -y --setopt=install_weak_deps=False install
+          git-core python3 qt6-qtdeclarative-devel qt6-qtmultimedia
+          libplasma plasma5support kf6-kirigami kf6-kcmutils kf6-knotifications
 
-      - name: Validate package metadata
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Lint
+        run: ./lint.sh
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Check tag matches metadata.json version
         run: |
-          python3 -m json.tool com.pomodoro.minimal/metadata.json > /dev/null && echo "metadata.json OK"
-          python3 -c "import xml.dom.minidom; xml.dom.minidom.parse('com.pomodoro.minimal/contents/config/main.xml'); print('main.xml OK')"
+          version="$(jq -r .KPlugin.Version com.pomodoro.minimal/metadata.json)"
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match metadata.json version $version"
+            exit 1
+          fi
 
       - name: Build .plasmoid
         run: |
@@ -28,7 +57,14 @@ jobs:
           zip -qr ../com.pomodoro.minimal.plasmoid metadata.json contents
           unzip -l ../com.pomodoro.minimal.plasmoid
 
+      # Re-running the workflow for a tag that already has a release
+      # replaces the attached file instead of failing.
       - name: Publish to release
-        run: gh release create "$GITHUB_REF_NAME" com.pomodoro.minimal.plasmoid --generate-notes
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" com.pomodoro.minimal.plasmoid --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" com.pomodoro.minimal.plasmoid --generate-notes
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

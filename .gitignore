@@ -1,0 +1,2 @@
+# Built plasmoid packages — built locally or by CI, never committed.
+*.plasmoid
